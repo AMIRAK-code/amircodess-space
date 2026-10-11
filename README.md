@@ -73,6 +73,27 @@ The server keeps live connections open and writes to local disk, so it needs a l
 
 Purely serverless hosting will not keep the data.
 
+## Order a project form
+
+`/order/` is a static page where visitors send their contact details and a project brief. It posts to
+`/api/order`, a Cloudflare Pages Function (`functions/api/order.js`) that emails the request to you through
+Brevo's transactional email API, with the visitor's address set as Reply-To so you can answer straight from your inbox.
+
+Setup on Cloudflare Pages (Settings → Variables and Secrets, add as encrypted secrets for Production):
+
+| Variable | Value |
+| --- | --- |
+| `BREVO_API_KEY` | A Brevo v3 API key (Brevo → SMTP & API → API Keys) |
+| `ORDER_TO_EMAIL` | The inbox that should receive requests |
+| `ORDER_FROM_EMAIL` | A sender address verified in Brevo (Brevo → Senders, Domains & Dedicated IPs) |
+| `ORDER_FROM_NAME` | Optional sender name, default `Amir Codes Space` |
+
+Redeploy after adding them. Until they are set, the form shows "not configured yet" instead of failing silently.
+For best deliverability, verify your own domain (e.g. `hello@amircodess.com`) in Brevo and use it as the sender.
+
+Local test: put the same variables in a `.dev.vars` file (git-ignored, never commit it) and run
+`npx wrangler pages dev public`, then open `http://localhost:8788/order/`.
+
 ## Tips
 
 - **Preview the birthday party** at any time: open the Birthday board and click **✨ Preview a birthday party**.
