@@ -144,6 +144,7 @@ export function initHud(config) {
     h('header', { class: 'topbar' },
       h('div', { class: 'brand glass' }, h('span', { class: 'logo' }, '🏢'), h('div', {}, h('b', {}, config.officeName), els.clock), els.conn),
       h('div', { class: 'top-right' },
+        h('a', { class: 'glass order-btn', href: '/order/', title: 'Order a project' }, h('span', { 'aria-hidden': 'true' }, '🚀'), h('span', { class: 'order-txt' }, 'Order a project')),
         h('button', { class: 'glass people-btn', 'aria-label': 'People', onClick: () => emit('open', { name: 'people' }) }, els.stack, els.count),
         h('button', { class: 'glass icon-btn', 'aria-label': 'Sticker mail', title: 'Sticker mail', onClick: () => emit('open', { name: 'mail' }) }, '📬', els.mailBadge),
         els.jukebox,
